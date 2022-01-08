@@ -17,15 +17,16 @@ contract Ownable {
 
     event OwnershipTransfered(address newOwner);
 
-    function getOwner() external view returns (address) {
+    function getOwner() public view returns (address) {
         return _owner;
     }
 
-    constructor() public {
+    constructor() internal {
         _owner = msg.sender;
+        emit OwnershipTransfered(_owner);
     }
 
-    modifier onlyOwner {
+    modifier onlyOwner() {
         require(msg.sender == _owner, "Requester isn't allowed");
         _;
     }
@@ -61,16 +62,16 @@ contract Pausable is Ownable {
         }
     }
 
-    constructor() public {
+    constructor() internal {
         _paused = false;
     }
 
-    modifier whenNotPaused {
+    modifier whenNotPaused() {
         require(_paused == false, "Contract is paused");
         _;
     }
 
-    modifier paused {
+    modifier paused() {
         require(_paused == true, "Contract isn't paused");
         _;
     }
@@ -203,7 +204,7 @@ contract ERC721 is Pausable, ERC165 {
     }
 
     function transferFrom(address from, address to, uint256 tokenId) public {
-        require(_isApprovedOrOwner(msg.sender, tokenId));
+        require(_isApprovedOrOwner(from, tokenId));
 
         _transferFrom(from, to, tokenId);
     }
@@ -547,13 +548,13 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
 //      -takes in a 'to' address, tokenId, and tokenURI as parameters
 //      -returns a true boolean upon completion of the function
 //      -calls the superclass mint and setTokenURI functions
-contract ERC721TokenFinal is ERC721Metadata {
+contract ERC721MintableComplete is ERC721Metadata {
 
     constructor(string memory name, string memory symbol) ERC721Metadata(name, symbol, "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/") public {
     
     }
 
-    function _mint(address to, uint256 tokenId, string memory tokenURI) public onlyOwner whenNotPaused returns (bool) {
+    function mint(address to, uint256 tokenId) public onlyOwner whenNotPaused returns (bool) {
         super._mint(to, tokenId);
         setTokenURI(tokenId);
 
