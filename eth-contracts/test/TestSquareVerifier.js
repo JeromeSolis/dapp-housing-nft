@@ -3,7 +3,6 @@
 // Test verification with incorrect proof
 
 var Verifier = artifacts.require("./Verifier");
-const truffleAssert = require('truffle-assertions');
 const proof = require("../../zokrates/code/square/proof.json");
 
 // Test verification with correct proof
