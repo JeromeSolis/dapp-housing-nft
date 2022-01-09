@@ -11,7 +11,6 @@ contract('TestSquareVerifier', accounts => {
     describe('test with different proofs', function() {
         beforeEach(async function() {
             this.contract = await Verifier.new({from:accounts[0]});
-
         })
 
         it('should work with the correct proof', async function() {
