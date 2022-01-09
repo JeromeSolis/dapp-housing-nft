@@ -1,0 +1,50 @@
+Starting migrations...
+======================
+> Network name:    'ropsten'
+> Network id:      3
+> Block gas limit: 8000000 (0x7a1200)
+
+
+2_deploy_contracts.js
+=====================
+
+   Deploying 'Verifier'
+   --------------------
+   > transaction hash:    0x232d5fd152eaa9f8e216d169c9521fe06994c898d0ec8ff3a6af8c7314e2c614
+   > Blocks: 2            Seconds: 32
+   > contract address:    0x1D0E2281faB2db187B4B4e025f3568dF76a942E1
+   > block number:        11780613
+   > block timestamp:     1641706597
+   > account:             0x098EdfFA5Adac9acCB66a6c110C4E3633C494A04
+   > balance:             0.559394225037505553
+   > gas used:            979356 (0xef19c)
+   > gas price:           1.467993432 gwei
+   > value sent:          0 ETH
+   > total cost:          0.001437688175589792 ETH
+
+
+   Deploying 'SolnSquareVerifier'
+   ------------------------------
+   > transaction hash:    0x6fb8f452b3c87d20a49cea5199b936f4b9a17b80b4079d8b36adb9c2a22e5828
+   > Blocks: 4            Seconds: 60
+   > contract address:    0xe5001F83556a1E93B7C5d38f576115e83B8D8362
+   > block number:        11780617
+   > block timestamp:     1641706640
+   > account:             0x098EdfFA5Adac9acCB66a6c110C4E3633C494A04
+   > balance:             0.554082048584897273
+   > gas used:            3618665 (0x373769)
+   > gas price:           1.467993432 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00531217645260828 ETH
+
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.006749864628198072 ETH
+
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.006749864628198072 ETH
