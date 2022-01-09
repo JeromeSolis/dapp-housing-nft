@@ -6,7 +6,7 @@ var Verifier = artifacts.require("./Verifier");
 const proof = require("../../zokrates/code/square/proof.json");
 
 // Test verification with correct proof
-contract('Verifier', accounts => {
+contract('TestSquareVerifier', accounts => {
 
     describe('test with different proofs', function() {
         beforeEach(async function() {

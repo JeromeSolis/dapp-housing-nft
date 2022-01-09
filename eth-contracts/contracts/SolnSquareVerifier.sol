@@ -17,6 +17,7 @@ contract SolnSquareVerifier is ERC721MintableComplete {
     struct Solution {
         uint256 solutionIndex;
         address solutionAddress;
+        bool minted;
     }
 
     // TODO define an array of the above struct
@@ -35,9 +36,19 @@ contract SolnSquareVerifier is ERC721MintableComplete {
         verifier = Verifier(verifierAddress);
     }
 
+    function getSolutionTotal() public view returns (uint256) {
+        return solutionTotal;
+    }
+
+    function getSolutionKey(Verifier.Proof memory proof, uint[2] memory input) public view returns (bytes32) {
+        bytes32 solutionKey = keccak256(abi.encodePacked(proof.a.X, proof.a.Y, proof.b.X, proof.b.Y, proof.c.X, proof.c.Y, input));
+        return solutionKey;
+    }
+
     function addSolution(bytes32 solutionKey, address solutionAddress) public {
         solutions[solutionKey].solutionIndex = solutionTotal;
         solutions[solutionKey].solutionAddress = solutionAddress;
+        solutions[solutionKey].minted = false;
 
         emit SolutionAdded(solutions[solutionKey].solutionIndex, solutions[solutionKey].solutionAddress);
         solutionTotal++;
@@ -46,15 +57,15 @@ contract SolnSquareVerifier is ERC721MintableComplete {
     // TODO Create a function to mint new NFT only after the solution has been verified
     //  - make sure the solution is unique (has not been used before)
     //  - make sure you handle metadata as well as tokenSuplly
-    function mint(address to, uint256 tokenId, Verifier.Proof memory proof, uint[2] memory input) public {
-        bytes32 solutionKey = keccak256(abi.encodePacked(proof.a.X, proof.a.Y, proof.b.X, proof.b.Y, proof.c.X, proof.c.Y, input));
-        require(solutions[solutionKey].solutionAddress == address(0x0), "Solution already used");
-        
-        if (verifier.verifyTx(proof, input)) {
-            addSolution(solutionKey, msg.sender);
-            mint(to, tokenId);
-        } else revert("Proof wasn't verified");
-        
+    function mintNFT(address to, uint256 tokenId, Verifier.Proof memory proof, uint[2] memory input) public {
+        bytes32 solutionKey = getSolutionKey(proof, input);
+        require(solutions[solutionKey].minted == false, "Solution already used");
+        require(verifier.verifyTx(proof, input), "Proof wasn't verified");
 
+        if (solutions[solutionKey].solutionAddress == address(0x0)) {
+            addSolution(solutionKey, msg.sender);
+        }
+        mint(to, tokenId);
+        solutions[solutionKey].minted = true;
     }
 }
