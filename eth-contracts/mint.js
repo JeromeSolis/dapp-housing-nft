@@ -4,7 +4,8 @@ const fs = require("fs");
 
 const infuraKey = fs.readFileSync(".key").toString().trim();
 const mnemonic = fs.readFileSync(".secret").toString().trim();
-const contractAddress = "0xe5001F83556a1E93B7C5d38f576115e83B8D8362";
+// const contractAddress = "0xe5001F83556a1E93B7C5d38f576115e83B8D8362"; # Ropsten address
+const contractAddress = "0x1D0E2281faB2db187B4B4e025f3568dF76a942E1";
 const ownerAddress = "0x098EdfFA5Adac9acCB66a6c110C4E3633C494A04";
 const network = "ropsten";
 
@@ -35,10 +36,10 @@ const proof8 = require("../zokrates/code/square/proof_10_100.json");
 const proof9 = require("../zokrates/code/square/proof_11_121.json");
 
 async function main() {
-    const provider = new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/${infuraKey}`);
+    const provider = new HDWalletProvider(mnemonic, `https://rinkeby.infura.io/v3/${infuraKey}`);
     const web3 = new Web3(provider);
     const contract = new web3.eth.Contract(contractABI.abi, contractAddress, { gasLimit: "5500000" });
-    
+
     const tx0 = await contract.methods.mintNFT(ownerAddress, tokens[0], proof0.proof, proof0.inputs).send({from:ownerAddress});
     console.log("Address Minted. Transaction: " + tx0.transactionHash);
     const tx1 = await contract.methods.mintNFT(ownerAddress, tokens[1], proof1.proof, proof1.inputs).send({from:ownerAddress});
