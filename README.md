@@ -12,7 +12,7 @@ All the contract can be tested by using the following command from the `<PATH-TO
 ```
 truffle test
 ```
-The current testing configuration found in `truffle-config.js` is listenning to `port 7545` does require the Ganache desktop app to be running. One can use the Ganache CLI by changing the port to `8545`.
+The current testing configuration found in `truffle-config.js` is listenning to `port 7545` and does require the Ganache desktop app to be running. One can use the Ganache CLI by simply changing the port to `8545`.
 The `SolnSquareVerifier.sol` contract ABI can be found in the JSON file located at `<PATH-TO-PROJECT-REPO>/eth-contracts/build/contracts/SolnSquareVerifier.json`. It can also be directly be imported by using the following script:
 ```
 const fs = require("fs");
